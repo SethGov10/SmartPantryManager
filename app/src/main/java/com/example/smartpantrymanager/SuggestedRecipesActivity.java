@@ -34,6 +34,7 @@ public class SuggestedRecipesActivity extends AppCompatActivity {
             Insets bars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(bars.left, bars.top, bars.right, bars.bottom);
             return insets;
+
         });
 
         db = new DatabaseHelper(this);
@@ -48,6 +49,7 @@ public class SuggestedRecipesActivity extends AppCompatActivity {
             startActivity(intent);
         });
         rv.setAdapter(adapter);
+        NavHelper.setup(this, R.id.nav_suggestions);
     }
 
     // Re-run the matching every time the screen appears,

@@ -35,9 +35,8 @@ public class PantryActivity extends AppCompatActivity {
 
         findViewById(R.id.btnAddIngredient).setOnClickListener(v ->
                 startActivity(new Intent(PantryActivity.this, AddEditActivity.class)));
+        NavHelper.setup(this, R.id.nav_pantry);
 
-        findViewById(R.id.btnSuggested).setOnClickListener(v ->
-                startActivity(new Intent(PantryActivity.this, SuggestedRecipesActivity.class)));
         db = new DatabaseHelper(this);
         tvEmpty = findViewById(R.id.tvEmpty);
 
