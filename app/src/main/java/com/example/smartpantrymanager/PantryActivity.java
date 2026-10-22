@@ -1,6 +1,7 @@
 package com.example.smartpantrymanager;
 
 import android.os.Bundle;
+import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,8 +30,14 @@ public class PantryActivity extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+
         });
 
+        findViewById(R.id.btnAddIngredient).setOnClickListener(v ->
+                startActivity(new Intent(PantryActivity.this, AddEditActivity.class)));
+
+        findViewById(R.id.btnSuggested).setOnClickListener(v ->
+                startActivity(new Intent(PantryActivity.this, SuggestedRecipesActivity.class)));
         db = new DatabaseHelper(this);
         tvEmpty = findViewById(R.id.tvEmpty);
 
@@ -56,8 +63,8 @@ public class PantryActivity extends AppCompatActivity {
         rv.setAdapter(adapter);
     }
 
-    // onResume runs every time the screen comes back into view,
-    // so the list refreshes after adding or editing an item
+    // on Resume runs every time the screen comes back into view
+    //  the list refreshes after adding or editing an item
     @Override
     protected void onResume() {
         super.onResume();
