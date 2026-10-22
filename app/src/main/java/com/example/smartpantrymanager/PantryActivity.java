@@ -48,16 +48,23 @@ public class PantryActivity extends AppCompatActivity {
                 new IngredientAdapter.OnItemActionListener() {
                     @Override
                     public void onItemClick(Ingredient ingredient) {
-                        // Edit screen will be added in the next step
-                        Toast.makeText(PantryActivity.this,
-                                "Edit: " + ingredient.getName(), Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(PantryActivity.this, AddEditActivity.class);
+                        intent.putExtra(AddEditActivity.EXTRA_INGREDIENT_ID, ingredient.getId());
+                        startActivity(intent);
                     }
 
                     @Override
                     public void onItemLongClick(Ingredient ingredient) {
-                        // Delete with confirmation will be added in a later step
-                        Toast.makeText(PantryActivity.this,
-                                "Delete: " + ingredient.getName(), Toast.LENGTH_SHORT).show();
+                        new androidx.appcompat.app.AlertDialog.Builder(PantryActivity.this)
+                                .setTitle("Delete ingredient")
+                                .setMessage("Delete " + ingredient.getName() + "?")
+                                .setPositiveButton("Delete", (dialog, which) -> {
+                                    db.deleteIngredient(ingredient.getId());
+                                    refreshList();
+                                    Toast.makeText(PantryActivity.this, "Ingredient deleted", Toast.LENGTH_SHORT).show();
+                                })
+                                .setNegativeButton("Cancel", null)
+                                .show();
                     }
                 });
         rv.setAdapter(adapter);
