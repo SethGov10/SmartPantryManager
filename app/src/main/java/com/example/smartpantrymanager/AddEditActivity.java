@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.content.SharedPreferences;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -26,7 +27,7 @@ public class AddEditActivity extends AppCompatActivity {
 
     public static final String EXTRA_INGREDIENT_ID = "ingredient_id";
 
-    private static final String[] UNITS = {"g", "kg", "ml", "l", "tsp", "tbsp", "cup", "piece"};
+    public static final String[] UNITS = {"g", "kg", "ml", "l", "tsp", "tbsp", "cup", "piece"};
 
     private DatabaseHelper db;
     private EditText etName, etQuantity, etExpiry;
@@ -59,7 +60,8 @@ public class AddEditActivity extends AppCompatActivity {
         ArrayAdapter<String> unitAdapter = new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_dropdown_item, UNITS);
         spUnit.setAdapter(unitAdapter);
-
+        SharedPreferences prefs = getSharedPreferences(SettingsActivity.PREFS, MODE_PRIVATE);
+        spUnit.setSelection(indexOfUnit(prefs.getString(SettingsActivity.KEY_UNIT, "g")));
         // Did the previous screen send us an ingredient id? If so, we are editing.
         editId = getIntent().getIntExtra(EXTRA_INGREDIENT_ID, -1);
         if (editId != -1) {
